@@ -50,5 +50,24 @@ def get_mapping(map_file):
 
     return mapping_list
 
+mapping_list_hsa = get_mapping("mapping/hsa.map")
 
-get_mapping("mapping/hsa.map")
+
+def get_go_terms(mapping_list, go_file):
+    # Open the file.
+    f = open(go_file, "r")
+
+    # This will be the dictionary that this function returns.
+    # Entries will have as a key an Ensembl ID and the value will
+    # be a set of GO terms.
+    go_dict = dict()
+
+    for line in f:
+        # TODO: PUT YOUR CODE HERE
+
+
+
+    # Remember to close the file after we're done.
+    f.close()
+
+    return go_dict

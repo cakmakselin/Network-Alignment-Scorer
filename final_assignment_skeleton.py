@@ -1,6 +1,6 @@
 import sys
 
-def get_mapping(map_file: object) -> object:
+def get_mapping(map_file):
     # Open the file.
     f = open(map_file, "r")
 
@@ -50,8 +50,6 @@ def get_mapping(map_file: object) -> object:
     f.close()
 
     return mapping_list
-
-get_mapping("mapping/hsa.map")
 
 
 def get_go_terms(mapping_list, go_file):
