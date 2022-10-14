@@ -62,8 +62,38 @@ def get_go_terms(mapping_list, go_file):
     go_dict = dict()
 
     for line in f:
-        # TODO: PUT YOUR CODE HERE
 
+        if line.startswith("!"):
+            continue
+            # skip comments
+
+        else:
+            # strip line of go-file from whitespace and split into list:
+            x = line.strip().split()
+
+            # use ID in go file as search word
+            query = x[1]
+
+            #find GO term and save as value
+            for item in x:
+                if item.startswith("GO:"):
+                    value = item
+                else:
+                    continue
+
+            # search for query in every dictionary in mapping list
+            for d in mapping_list:
+                if query in d.keys():
+                    # if found, save Ensembl_ID as key
+                    key = mapping_list[mapping_list.index(d)][query]
+
+                    # update dictionary with key:value
+                    if key in go_dict:
+                        go_dict[key].add(value)
+                    else:
+                        go_dict[key] = {value}
+                else:
+                    continue
 
 
     # Remember to close the file after we're done.
