@@ -113,8 +113,35 @@ def compute_score(alignment_file, go_one_dict, go_two_dict):
     score = 0.0
 
     for line in f:
-        # TODO: PUT YOUR CODE HERE
+        # strip line from whitespace and split into list:
+        x = line.strip().split()
 
+        # find go-terms for first protein from go_dictionary
+        protein1 = x[0]
+
+        if protein1 in go_one_dict:
+            protein1_go = go_one_dict[protein1]
+        elif protein1 in go_two_dict:
+            protein1_go = go_two_dict[protein1]
+        else:
+            unmappable_one = unmappable_one + 1
+
+
+        # find go-terms for second protein from go_dictionary
+        protein2 = x[1]
+
+        if protein2 in go_one_dict:
+            protein2_go = go_one_dict[protein2]
+        elif protein2 in go_two_dict:
+            protein2_go = go_two_dict[protein2]
+        else:
+            unmappable_two = unmappable_two + 1
+
+        # compute jaccard score for 2 proteins
+        line_score = len(protein1_go.intersection(protein2_go)) / len(protein1_go.union(protein2_go))
+
+        # add line score to global score for file
+        score = score + line_score
 
     # Remember to close the file after we're done.
     f.close()

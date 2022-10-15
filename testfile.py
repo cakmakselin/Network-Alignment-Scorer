@@ -51,7 +51,7 @@ def get_mapping(map_file):
 
 
 mapping_list_hsa = get_mapping("mapping/hsa.map")
-
+mapping_list_rno = get_mapping("mapping/rno.map")
 
 def get_go_terms(mapping_list, go_file):
     # Open the file.
@@ -103,3 +103,53 @@ def get_go_terms(mapping_list, go_file):
 
 
 go_dict_hsa = get_go_terms(mapping_list_hsa, "GO/hsa.go")
+go_dict_rno = get_go_terms(mapping_list_rno, "GO/rno.go")
+
+def compute_score(alignment_file, go_one_dict, go_two_dict):
+    # Open the file.
+    f = open(alignment_file, "r")
+
+    # Keep track of the number of proteins we can't map to GO terms
+    # and the score.
+    unmappable_one = 0
+    unmappable_two = 0
+    score = 0.0
+
+    for line in f:
+        # strip line from whitespace and split into list:
+        x = line.strip().split()
+
+        # find go-terms for first protein from go_dictionary
+        protein1 = x[0]
+
+        if protein1 in go_one_dict:
+            protein1_go = go_one_dict[protein1]
+        elif protein1 in go_two_dict:
+            protein1_go = go_two_dict[protein1]
+        else:
+            unmappable_one = unmappable_one + 1
+
+        # find go-terms for second protein from go_dictionary
+        protein2 = x[1]
+
+        if protein2 in go_one_dict:
+            protein2_go = go_one_dict[protein2]
+        elif protein2 in go_two_dict:
+            protein2_go = go_two_dict[protein2]
+        else:
+            unmappable_two = unmappable_two + 1
+
+        # compute jaccard score for 2 proteins
+        line_score = len(protein1_go.intersection(protein2_go)) / len(protein1_go.union(protein2_go))
+
+        # add line score to global score for file
+        score = score + line_score
+
+    # Remember to close the file after we're done.
+    f.close()
+
+    # Return the statistics and the score back so the main code
+    # can print it out.
+    return unmappable_one, unmappable_two, score
+
+compute_score("alignments/rno-hsa.sif", go_dict_hsa, go_dict_rno)
