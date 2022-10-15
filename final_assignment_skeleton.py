@@ -1,7 +1,6 @@
 # The assignment is to write a script "score.py" which takes five command line arguments as input:
 # ./final_assignment_skeleton.py <SIF> <GO1> <GO2> <MAP1> <MAP2>
 
-
 import sys
 
 
@@ -15,6 +14,14 @@ def get_mapping(map_file):
     # Skip the header on the first line.
     header = f.readline()
 
+    # create dictionaries (# of non-Ensembl values)
+    n = 0
+    n = len(header.strip().split()) - 1
+    while n > 0:
+        mapping_list.append({})
+        n = n-1
+
+    # fill dictionaries
     for line in f:
         if line == header:
             continue
@@ -23,33 +30,18 @@ def get_mapping(map_file):
             # strip line of whitespace, split elements into list:
             x = line.strip().split()
 
-            # n = number of dictionaries
-            n = len(x) - 1
-
             # assign first item (Ensembl_ID) as value
             value = x[0]
 
-            # create n dictionaries
-            while 0 < n:
-                if len(mapping_list) < n:
-                    d = {}
-                    mapping_list.append(d)
-                    n -= 1
-                else:
-                    break
-
-            # fill n dictionaries with n+1th item as key
+            # fill n-th dictionary with n+1th item as key
             for key in list(range(1, len(x))):
 
-                # select correct (n-th) dictionary in mapping_list
+                # select correct (n-th) dictionary position in mapping_list
                 position = key - 1
 
-                if len(mapping_list) < n:
-                    mapping_list.append({})
-                elif len(mapping_list) == len(x) - 1:
-                    # store key and value in n-th dictionary in mapping_list
-                    inner_d = {x[key]: value}
-                    mapping_list[position].update(inner_d)
+                # store key and value in n-th dictionary in mapping_list
+                inner_d = {x[key]: value}
+                mapping_list[position].update(inner_d)
 
     # Remember to close the file after we're done.
     f.close()
@@ -155,6 +147,7 @@ def compute_score(alignment_file, go_one_dict, go_two_dict):
 
 
 def main():
+
     # check whether the number of arguments in command line is correct
     if len(sys.argv) == 6:
 
