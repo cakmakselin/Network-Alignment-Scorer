@@ -1,5 +1,5 @@
 # The assignment is to write a script "score.py" which takes five command line arguments as input:
-# ./final_assignment_skeleton.py <SIF> <GO1> <GO2> <MAP1> <MAP2>
+# ./score.py <SIF> <GO1> <GO2> <MAP1> <MAP2>
 
 import sys
 
@@ -33,15 +33,19 @@ def get_mapping(map_file):
             # assign first item (Ensembl_ID) as value
             value = x[0]
 
+
             # fill n-th dictionary with n+1th item as key
             for key in list(range(1, len(x))):
 
-                # select correct (n-th) dictionary position in mapping_list
-                position = key - 1
+                if len(list(range(len(x)))) == len(header):
+                    # select correct (n-th) dictionary position in mapping_list
+                    position = key - 1
+                    # store key and value in n-th dictionary in mapping_list
+                    mapping_list[position].update({x[key]: value})
 
-                # store key and value in n-th dictionary in mapping_list
-                inner_d = {x[key]: value}
-                mapping_list[position].update(inner_d)
+                elif len(list(range(len(x)))) == 1:
+                    break
+
 
     # Remember to close the file after we're done.
     f.close()
