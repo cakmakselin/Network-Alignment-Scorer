@@ -1,5 +1,5 @@
 # The assignment is to write a script "score.py" which takes five command line arguments as input:
-# ./go_score.py <SIF> <GO1> <GO2> <MAP1> <MAP2>
+# ./final_assignment_skeleton.py <SIF> <GO1> <GO2> <MAP1> <MAP2>
 
 
 import sys
@@ -82,7 +82,7 @@ def get_go_terms(mapping_list, go_file):
             # find GO term and save as value
             for item in x:
                 if item.startswith("GO:"):
-                    value = item
+                    value = item.strip("GO:")
                 else:
                     continue
 
@@ -170,7 +170,7 @@ def main():
         return compute_score(sys.argv[1], go1, go2)
 
     else:
-        print("Error: 6 arguments expected. Correct: 6. Found: ", len(sys.argv), "->", str(sys.argv))
+        print("Error: 6 arguments expected. Found: ", len(sys.argv), "->", str(sys.argv))
 
 
 if __name__ == '__main__':
