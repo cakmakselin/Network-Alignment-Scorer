@@ -1,4 +1,9 @@
+# The assignment is to write a script "score.py" which takes five command line arguments as input:
+# ./go_score.py <SIF> <GO1> <GO2> <MAP1> <MAP2>
+
+
 import sys
+
 
 def get_mapping(map_file):
     # Open the file.
@@ -74,7 +79,7 @@ def get_go_terms(mapping_list, go_file):
             # use ID in go file as search word
             query = x[1]
 
-            #find GO term and save as value
+            # find GO term and save as value
             for item in x:
                 if item.startswith("GO:"):
                     value = item
@@ -94,7 +99,6 @@ def get_go_terms(mapping_list, go_file):
                         go_dict[key] = {value}
                 else:
                     continue
-
 
     # Remember to close the file after we're done.
     f.close()
@@ -126,7 +130,6 @@ def compute_score(alignment_file, go_one_dict, go_two_dict):
         else:
             unmappable_one = unmappable_one + 1
 
-
         # find go-terms for second protein from go_dictionary
         protein2 = x[1]
 
@@ -152,7 +155,22 @@ def compute_score(alignment_file, go_one_dict, go_two_dict):
 
 
 def main():
-    # TODO: PUT YOUR CODE HERE
+    # check whether the number of arguments in command line is correct
+    if len(sys.argv) == 6:
+
+        # map protein annotations
+        map_list1 = get_mapping(sys.argv[4])
+        map_list2 = get_mapping(sys.argv[5])
+
+        # get go terms
+        go1 = get_go_terms(map_list1, sys.argv[2])
+        go2 = get_go_terms(map_list2, sys.argv[3])
+
+        # compute scoere
+        return compute_score(sys.argv[1], go1, go2)
+
+    else:
+        print("Error: 6 arguments expected. Correct: 6. Found: ", len(sys.argv), "->", str(sys.argv))
 
 
 if __name__ == '__main__':
