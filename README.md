@@ -5,4 +5,4 @@ Task: In this assignment you are given three alignments of proteins of mus muscu
 
 Final script: Constructs two mapping lists (each containing several dictionaries) by calling the function get_mapping on the two specified map files. Then we use these mapping lists as arguments to the function get_go_terms. The result of that function is the input of the compute_score function.
 
-Examplary arguments: ./go_score.py alignments/rno-mmu.sif GO/rno.go GO/mmu.go mapping/rno.map mapping/mmu.map
+Examplary arguments via CLI: ./go_score.py alignments/rno-mmu.sif GO/rno.go GO/mmu.go mapping/rno.map mapping/mmu.map
