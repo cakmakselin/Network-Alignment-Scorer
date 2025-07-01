@@ -25,7 +25,9 @@ scoring_network_alignments/
 │   └── mappings/           # Protein ID mapping files
 ├── network_alignment_scorer/
 │   ├── __init__.py
-│   └── scorer.py           # Main scoring module
+│   ├── scorer.py           # Main scoring module
+│   └── plotter.py          # Visualization module
+├── plots/                  # Generated visualization plots
 ├── requirements.txt        # Python dependencies
 └── README.md
 ```
@@ -48,11 +50,12 @@ pip install -r requirements.txt
 ### Programmatic Usage
 
 ```python
-from network_alignment_scorer import NetworkAlignmentScorer
+from network_alignment_scorer import NetworkAlignmentScorer, AlignmentPlotter
 from pathlib import Path
 
-# Initialize scorer
+# Initialize scorer and plotter
 scorer = NetworkAlignmentScorer()
+plotter = AlignmentPlotter()
 
 # Score alignment
 results = scorer.score_alignment(
@@ -62,6 +65,11 @@ results = scorer.score_alignment(
     mapping_file_1=Path("data/mappings/rno.map"),
     mapping_file_2=Path("data/mappings/mmu.map")
 )
+
+# Generate visualizations
+plotter.plot_coverage_breakdown(results, save_path="coverage_breakdown.png")
+plotter.plot_similarity_distribution(results, save_path="similarity_distribution.png")
+plotter.plot_quality_metrics(results, save_path="quality_metrics.png")
 
 # Get quality report
 report = scorer.get_quality_report(results)
@@ -91,6 +99,23 @@ Quality Assessment:
 - Overall Quality: GOOD
 - Coverage: NEEDS IMPROVEMENT
 ```
+
+### Visualization Results
+
+#### Coverage Breakdown
+![Coverage Breakdown](plots/coverage_breakdown.png)
+
+*The pie chart shows the distribution of alignment pairs: only 4.85% (341 pairs) were successfully scored, while 94.7% of rat proteins and 0.4% of mouse proteins could not be mapped to GO terms.*
+
+#### Similarity Metrics
+![Similarity Distribution](plots/similarity_distribution.png)
+
+*The mean Jaccard similarity of 0.6041 indicates good functional conservation between successfully mapped protein pairs, while the low coverage highlights data integration challenges.*
+
+#### Comprehensive Quality Metrics
+![Quality Metrics](plots/quality_metrics.png)
+
+*The comprehensive view shows the breakdown of alignment pairs, functional similarity scores, coverage percentages, and cumulative similarity scores for the rat-mouse alignment.*
 
 ### Analysis Notes
 
@@ -140,5 +165,6 @@ Where A and B are sets of GO terms for aligned proteins.
 - Python 3.8+
 - pandas
 - numpy
+- matplotlib
 - pathlib (built-in)
 

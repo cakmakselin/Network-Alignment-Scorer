@@ -6,5 +6,6 @@ using Gene Ontology annotations.
 """
 
 from .scorer import NetworkAlignmentScorer
+from .plotter import AlignmentPlotter
 
-__all__ = ["NetworkAlignmentScorer"] 
+__all__ = ["NetworkAlignmentScorer", "AlignmentPlotter"] 
