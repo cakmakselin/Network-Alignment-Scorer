@@ -1,5 +1,7 @@
 """
 Simple plotting module for network alignment results.
+
+This script provides visualization tools for interpreting the results of network alignment scoring based on Gene Ontology (GO) annotations. It was originally developed as an extension to a university bioinformatics course assignment on network alignment validation.
 """
 
 import matplotlib.pyplot as plt

@@ -1,6 +1,8 @@
 """
 Network Alignment Scorer
 
+This script implements the core logic for scoring protein-protein interaction network alignments using Gene Ontology (GO) annotations. It was originally developed as part of a university bioinformatics course assignment focused on validating network alignments by functional similarity.
+
 Main module for scoring protein-protein interaction network alignments.
 """
 

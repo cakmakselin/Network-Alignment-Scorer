@@ -2,6 +2,8 @@
 
 A bioinformatics tool for evaluating protein-protein interaction network alignments using Gene Ontology annotations.
 
+This project was originally developed as part of a university bioinformatics course assignment. It addresses the problem of validating protein-protein interaction network alignments between species by scoring the functional similarity of aligned protein pairs using Gene Ontology (GO) terms.
+
 ## Overview
 
 This project provides a comprehensive framework for scoring network alignments between different species by comparing the functional annotations (GO terms) of aligned proteins. The tool uses Jaccard similarity to measure the functional similarity between protein pairs, providing insights into the quality and biological relevance of network alignments.
